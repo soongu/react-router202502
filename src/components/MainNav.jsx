@@ -1,24 +1,27 @@
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import styles from './MainNav.module.scss';
 
 const MainNav = () => {
+
+  const activateLink = ({ isActive }) => `${styles.navLink} ${isActive ? styles.active : ''}`;
+
   return (
     <nav className={styles.nav}>
-      <Link
-        className={styles.navLink}
+      <NavLink
+        className={activateLink}
         to='/'>
         Home
-      </Link>
-      <Link
-        className={styles.navLink}
+      </NavLink>
+      <NavLink
+        className={activateLink}
         to='/blog'>
         Blog
-      </Link>
-      <Link
-        className={styles.navLink}
+      </NavLink>
+      <NavLink
+        className={activateLink}
         to='/about'>
         About
-      </Link>
+      </NavLink>
     </nav>
   );
 }
