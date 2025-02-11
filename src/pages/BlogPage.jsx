@@ -1,5 +1,12 @@
+import MainNav from "../components/MainNav";
+
 const BlogPage = () => {
-  return <h1>BlogPage입니다.</h1>;
+  return (
+    <>
+      <MainNav />
+      <h1>BlogPage입니다.</h1>
+    </>
+  );
 };
 
 export default BlogPage;
