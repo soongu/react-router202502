@@ -1,9 +1,16 @@
+import PostCard from '../components/PostCard';
+import styles from './BlogPage.module.scss';
+import { posts } from '../assets/dummy-data';
 
 const BlogPage = () => {
   return (
-    <>
-      <h1>BlogPage입니다.</h1>
-    </>
+    <div className={styles.blog}>
+      <div className={styles.grid}>
+        {posts.map((post) => (
+          <PostCard key={post.id} post={post} />
+        ))}
+      </div>
+    </div>
   );
 };
 
