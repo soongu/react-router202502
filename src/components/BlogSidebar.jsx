@@ -1,8 +1,30 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate, useSearchParams } from 'react-router-dom';
 import styles from './BlogSidebar.module.scss';
 import { categories, posts } from '../assets/dummy-data';
 
 function BlogSidebar() {
+
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // 새로고침 없이 링크기능을 지원하는 함수
+  const navigate = useNavigate();
+
+  // 사이드에 있는 카테고리를 누르면 목록으로 이동하면서 카테고리를 보여줘야 함
+  const handleCategoryClick = category => { 
+    // location.href = '/blog?category=react';
+
+    // 먼저 /blog 로 이동
+    navigate('/blog');
+    
+    setSearchParams(prev => { 
+      if (category === 'all') {
+        prev.delete('category');
+      } else {
+        prev.set('category', category);
+      }
+      return prev;
+    });
+  };
 
 
   return (
@@ -13,6 +35,7 @@ function BlogSidebar() {
           <li key={category.id}>
             <button
               className={`${styles.categoryButton}`}
+              onClick={(e) => handleCategoryClick(category.id)}
             >
               {category.name}
               <span className={styles.count}>
