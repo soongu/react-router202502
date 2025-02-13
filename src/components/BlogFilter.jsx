@@ -4,15 +4,30 @@ import { categories } from '../assets/dummy-data';
 import { useSearchParams } from 'react-router-dom';
 
 const BlogFilter = () => {
-
   const [searchParams, setSearchParams] = useSearchParams();
- 
+
   // 카테고리 옵션 선택 이벤트
-  const handleCategoryChange = e => { 
+  const handleCategoryChange = (e) => {
     // 카테고리를 선택하면 option태그의 value를 읽어서
     // 쿼리스트링으로 ?category=react 만들어줘야함
-    setSearchParams(prev => {
+    setSearchParams((prev) => {
       prev.set('category', e.target.value);
+      return prev;
+    });
+  };
+
+  // 정렬 옵션 선택시 이벤트
+  const handleSortChange = (e) => {
+    setSearchParams((prev) => {
+      prev.set('sort', e.target.value);
+      return prev;
+    });
+  };
+
+  // 검색 이벤트
+  const handleSearch = e => { 
+    setSearchParams(prev => {
+      prev.set('search', e.target.value);
       return prev;
     });
   };
@@ -21,14 +36,19 @@ const BlogFilter = () => {
     <div className={styles.filter}>
       <select
         onChange={handleCategoryChange}
-        value={searchParams.get('category') || 'all'}
-      >
-        {
-          categories.map(({ id, name }) => <option key={id} value={id}>{ name }</option>)
-        }
+        value={searchParams.get('category') || 'all'}>
+        {categories.map(({ id, name }) => (
+          <option
+            key={id}
+            value={id}>
+            {name}
+          </option>
+        ))}
       </select>
 
-      <select>
+      <select
+        onChange={handleSortChange}
+        value={searchParams.get('sort') || 'latest'}>
         <option value='latest'>최신순</option>
         <option value='oldest'>오래된순</option>
       </select>
@@ -36,9 +56,11 @@ const BlogFilter = () => {
       <input
         type='text'
         placeholder='검색어를 입력하세요'
+        onChange={handleSearch}
+        value={searchParams.get('search') || ''}
       />
     </div>
   );
-}
+};
 
 export default BlogFilter;
